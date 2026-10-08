@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-primary font-sans antialiased overflow-x-hidden;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #root {
+    width: 100vw;
+    min-height: 100vh;
+  }
+}
+
+/* Custom Webkit Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #030303; 
+}
+::-webkit-scrollbar-thumb {
+  background: #222; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444; 
+}
