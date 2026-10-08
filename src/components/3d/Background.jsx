@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Grid } from '@react-three/drei';
 
-export default function Background() {
+
+export default function Background({ isCyborg }) {
   const gridRef = useRef();
 
   useFrame((state) => {
@@ -19,10 +20,10 @@ export default function Background() {
         args={[60, 60]} 
         cellSize={1} 
         cellThickness={0.5} 
-        cellColor="#080808" 
+        cellColor={isCyborg ? "#080808" : "#d5d5d5"} 
         sectionSize={5} 
-        sectionThickness={1} 
-        sectionColor="#111111" 
+        sectionThickness={isCyborg ? 1 : 0.5} 
+        sectionColor={isCyborg ? "#111111" : "#c0c0c0"} 
         fadeDistance={25} 
         fadeStrength={1} 
       />
