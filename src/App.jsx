@@ -1,10 +1,10 @@
 import React, { useLayoutEffect } from 'react';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
-import { motion } from 'framer-motion';
 import Navbar from './components/layout/Navbar';
 import Scene from './components/3d/Scene';
 import Hero from './sections/Hero';
 import Symbiosis from './sections/Symbiosis';
+import Capabilities from './sections/Capabilities';
 
 function AppContent() {
   const { mode } = useTheme();
@@ -21,9 +21,10 @@ function AppContent() {
     <div className="relative w-full min-h-screen selection:bg-accent/30 font-sans">
       <Scene />
       <Navbar />
-      <main className="relative z-10 flex flex-col pointer-events-none">
+      <main className="relative z-10 flex flex-col">
         <Hero />
         <Symbiosis />
+        <Capabilities />
         <section className="h-[50vh] w-full" />
       </main>
     </div>
