@@ -2,6 +2,8 @@ import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import DecoderText from '../components/ui/DecoderText';
+import MagneticButton from '../components/ui/MagneticButton';
 
 export default function Hero() {
   const containerRef = useRef();
@@ -89,7 +91,7 @@ export default function Hero() {
               animate={{ opacity: isCyborg ? 0.9 : 1, color: isCyborg ? "#ffffff" : "#111111" }}
               transition={{ duration: 0.8 }}
             >
-              THE SYMBIOSIS
+              <DecoderText text="THE SYMBIOSIS" delay={500} />
             </motion.span>
             <motion.span 
               className="block text-transparent bg-clip-text"
@@ -117,23 +119,23 @@ export default function Hero() {
         
         <div className="flex space-x-4 md:space-x-6">
           <div className="hero-btn-wrapper">
-            <motion.button 
-              className="px-6 py-3 md:px-8 md:py-4 border rounded-sm tracking-widest font-mono text-xs md:text-sm uppercase transition-all duration-300"
+            <MagneticButton 
+              className="px-6 py-3 md:px-8 md:py-4 border rounded-sm tracking-widest font-mono text-xs md:text-sm uppercase transition-colors duration-300"
               animate={{
                 backgroundColor: isCyborg ? "rgba(0, 240, 255, 0.1)" : "transparent",
                 borderColor: isCyborg ? "#00f0ff" : "#111111",
                 color: isCyborg ? "#00f0ff" : "#111111",
                 boxShadow: isCyborg ? "0 0 15px rgba(0,240,255,0.2)" : "none"
               }}
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ backgroundColor: isCyborg ? "rgba(0,240,255,0.2)" : "rgba(17,17,17,0.05)" }}
               transition={{ duration: 0.4 }}
             >
               Initialize
-            </motion.button>
+            </MagneticButton>
           </div>
           <div className="hero-btn-wrapper">
-            <motion.button 
-              className="px-6 py-3 md:px-8 md:py-4 border rounded-sm tracking-widest font-mono text-xs md:text-sm uppercase transition-all duration-300 backdrop-blur-sm"
+            <MagneticButton 
+              className="px-6 py-3 md:px-8 md:py-4 border rounded-sm tracking-widest font-mono text-xs md:text-sm uppercase transition-colors duration-300 backdrop-blur-sm"
               animate={{
                 backgroundColor: "transparent",
                 borderColor: isCyborg ? "rgba(255, 255, 255, 0.2)" : "rgba(17, 17, 17, 0.2)",
@@ -143,7 +145,7 @@ export default function Hero() {
               transition={{ duration: 0.4 }}
             >
               Learn More
-            </motion.button>
+            </MagneticButton>
           </div>
         </div>
       </div>

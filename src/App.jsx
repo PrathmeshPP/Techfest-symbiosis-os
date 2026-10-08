@@ -5,6 +5,7 @@ import Scene from './components/3d/Scene';
 import Hero from './sections/Hero';
 import Symbiosis from './sections/Symbiosis';
 import Capabilities from './sections/Capabilities';
+import CustomCursor from './components/ui/CustomCursor';
 
 function AppContent() {
   const { mode } = useTheme();
@@ -19,6 +20,7 @@ function AppContent() {
 
   return (
     <div className="relative w-full min-h-screen selection:bg-accent/30 font-sans">
+      <CustomCursor />
       <Scene />
       <Navbar />
       <main className="relative z-10 flex flex-col">

@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import DecoderText from '../components/ui/DecoderText';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -197,7 +198,7 @@ export default function Capabilities() {
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter"
             animate={{ color: isCyborg ? "#ffffff" : "#111111" }}
           >
-            Capabilities.
+            <DecoderText text="Capabilities." delay={300} />
           </motion.h2>
         </div>
 

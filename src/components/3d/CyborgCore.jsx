@@ -20,11 +20,13 @@ export default function CyborgCore({ isCyborg }) {
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      gsap.from(assembleGroupRef.current.scale, {
-        x: 0.01, y: 0.01, z: 0.01,
-        duration: 2.2,
-        ease: 'power3.out'
-      });
+      // Use fromTo to strictly limit the maximum scale. 
+      // Scale is restored slightly larger since it is now safely positioned below the text.
+      gsap.fromTo(assembleGroupRef.current.scale, 
+        { x: 0.01, y: 0.01, z: 0.01 },
+        { x: 0.9, y: 0.9, z: 0.9, duration: 2.2, ease: 'power3.out' }
+      );
+      
       gsap.from(ring1Ref.current.scale, { x: 0.01, y: 0.01, z: 0.01, duration: 1.8, delay: 0.2, ease: 'expo.out' });
       gsap.from(ring2Ref.current.scale, { x: 0.01, y: 0.01, z: 0.01, duration: 1.8, delay: 0.4, ease: 'expo.out' });
       gsap.from(ring3Ref.current.scale, { x: 0.01, y: 0.01, z: 0.01, duration: 1.8, delay: 0.6, ease: 'power2.out' });
@@ -38,7 +40,8 @@ export default function CyborgCore({ isCyborg }) {
         }
       });
 
-      tl.to(assembleGroupRef.current.scale, { x: 0.6, y: 0.6, z: 0.6, ease: 'power1.inOut' }, 0)
+      // Scale down when scrolling down
+      tl.to(assembleGroupRef.current.scale, { x: 0.5, y: 0.5, z: 0.5, ease: 'power1.inOut' }, 0)
         .to(ring1Ref.current.rotation, { z: "+=" + Math.PI / 2 }, 0)
         .to(ring2Ref.current.rotation, { z: "-=" + Math.PI / 2 }, 0)
         .to(ring3Ref.current.scale, { x: 0.8, y: 0.8, z: 0.8 }, 0)
@@ -81,7 +84,7 @@ export default function CyborgCore({ isCyborg }) {
   });
 
   return (
-    <group ref={parallaxGroupRef} position={[0, 0, -2]}>
+    <group ref={parallaxGroupRef} position={[0, -1.8, -2.5]}>
       <group ref={assembleGroupRef}>
         
         <Sphere ref={coreEnergyRef} args={[0.5, 32, 32]} position={[0, 0, 0.2]}>
