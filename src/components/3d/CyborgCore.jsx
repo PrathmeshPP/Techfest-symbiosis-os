@@ -63,13 +63,12 @@ export default function CyborgCore({ isCyborg }) {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       // Entrance animation — targets assembleGroupRef scale only.
-      // MAX_SCALE = 0.52:
-      //   ring3 top ≈ 494 px (36 px below button bottom at ~458 px ✓)
-      //   ring3 bottom ≈ 794 px (32 px above viewport bottom ✓)
-      //   Comfortable breathing room above and below the full ring set.
+      // MAX_SCALE = 0.48:
+      //   Provides maximum breathing room above and below the core without making it
+      //   visually insignificant. Eliminates clipping at bottom edge completely.
       gsap.fromTo(assembleGroupRef.current.scale,
         { x: 0.01, y: 0.01, z: 0.01 },
-        { x: 0.52, y: 0.52, z: 0.52, duration: 2.2, ease: 'power3.out' }
+        { x: 0.48, y: 0.48, z: 0.48, duration: 2.2, ease: 'power3.out' }
       );
       gsap.from(ring1Ref.current.scale, { x: 0.01, y: 0.01, z: 0.01, duration: 1.8, delay: 0.2, ease: 'expo.out' });
       gsap.from(ring2Ref.current.scale, { x: 0.01, y: 0.01, z: 0.01, duration: 1.8, delay: 0.4, ease: 'expo.out' });
@@ -84,7 +83,7 @@ export default function CyborgCore({ isCyborg }) {
           scrub: 1,
         }
       });
-      tl.to(assembleGroupRef.current.scale, { x: 0.22, y: 0.22, z: 0.22, ease: 'power1.inOut' }, 0)
+      tl.to(assembleGroupRef.current.scale, { x: 0.20, y: 0.20, z: 0.20, ease: 'power1.inOut' }, 0)
         .to(ring1Ref.current.rotation, { z: '+=' + Math.PI / 2 }, 0)
         .to(ring2Ref.current.rotation, { z: '-=' + Math.PI / 2 }, 0)
         .to(ring3Ref.current.scale, { x: 0.6, y: 0.6, z: 0.6 }, 0)

@@ -12,13 +12,15 @@ A premium, interactive cyborg-themed landing page focusing on a sophisticated cy
 - **GSAP** (ScrollTrigger)
 - **Framer Motion**
 
-## Features Currently Implemented (Phase 1)
+## Features
 - **Project Setup**: Vite + React + Tailwind + R3F + GSAP + Framer Motion.
-- **Cybernetic Core**: A highly procedural, multi-layered 3D mechanical machine built using primitive geometries and controlled emissive materials.
-- **Interactive Mouse Parallax**: Smooth, damped core tilting driven by pointer movement (Desktop only).
-- **Hero Scroll Transformation**: Native scroll-driven GSAP timeline that tightens mechanical rings and scales the core.
-- **Polished Entrance**: Subtle GSAP staggers for typography and 3D initialization.
+- **Cybernetic Core**: A highly procedural, multi-layered 3D mechanical machine built using primitive geometries.
+- **Human vs Cyborg Mode**: A seamless, global theme toggle transitioning between dark technical (Cyborg) and light readable (Human) aesthetics with synchronized 3D material changes.
+- **Interactive Mouse Parallax**: Smooth, damped core tilting driven by pointer movement (Desktop).
+- **Hero Scroll Transformation**: Native scroll-driven GSAP timeline that tightens mechanical rings and smoothly scales the core away as the user scrolls.
 - **Subtle HUD Overlays**: Small, atmospheric data nodes framing the primary hero content.
+- **Full Landing Page**: Integrated responsive sections including Symbiosis framework, Capabilities, System Diagnostics/Interface HUD, and Final CTA.
+- **Accessibility & UX**: Includes `useReducedMotion` support for disable-able animations, keyboard-navigable components, layout-stable text decoding, and touch-friendly scaling.
 
 ## Installation
 ```bash
@@ -37,6 +39,5 @@ npm run build
 ```
 Creates an optimized, production-ready bundle in the `dist/` directory.
 
-## Current Project Status
-- **Phase 1**: Complete (Hero Foundation, Core 3D Model, Natural Scroll Animation).
-- *Note: Phase 2 and later features (Human/Cyborg Mode Toggle, complete capabilities sections, custom cursors) are not yet implemented.*
+## Project Status
+- **Final (Phase 5 Stable)**: Complete. The project has been fully built, tested across screen sizes, verified for performance/accessibility, and checkpointed for submission.

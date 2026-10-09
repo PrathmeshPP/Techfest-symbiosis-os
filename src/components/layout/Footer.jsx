@@ -1,10 +1,11 @@
 import React from 'react';
 import { useTheme } from '../../context/ThemeContext';
 
+const currentYear = new Date().getFullYear();
+
 export default function Footer() {
   const { mode } = useTheme();
   const isCyborg = mode === 'cyborg';
-  const currentYear = new Date().getFullYear();
   
   return (
     <footer className={`relative z-10 w-full py-8 px-6 text-center border-t transition-colors duration-700 ${

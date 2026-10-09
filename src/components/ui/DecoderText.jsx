@@ -11,18 +11,19 @@ const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%-+<=>';
  * and rock-solid across all browsers and React Strict-Mode double-invoke.
  */
 export default function DecoderText({ text, className = '', as: Component = 'span', delay = 0 }) {
-  const [displayText, setDisplayText] = useState('');
+  const [animatedText, setAnimatedText] = useState('');
   const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef(null);
+
+  const displayText = shouldReduceMotion ? text : animatedText;
 
   useEffect(() => {
     let timerId;
     let rafId;
     let cancelled = false;
 
-    // Reduced-motion: show final text immediately, no animation
+    // Reduced-motion: derived directly in render, skip animation effect.
     if (shouldReduceMotion) {
-      setDisplayText(text);
       return;
     }
 
@@ -36,7 +37,7 @@ export default function DecoderText({ text, className = '', as: Component = 'spa
       const tick = () => {
         if (cancelled) return;
 
-        setDisplayText(
+        setAnimatedText(
           text
             .split('')
             .map((ch, i) => {
@@ -51,7 +52,7 @@ export default function DecoderText({ text, className = '', as: Component = 'spa
         if (iteration < total) {
           rafId = requestAnimationFrame(tick);
         } else {
-          setDisplayText(text); // guarantee final resolved state
+          setAnimatedText(text); // guarantee final resolved state
         }
       };
 
