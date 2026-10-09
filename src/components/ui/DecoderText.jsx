@@ -1,73 +1,82 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
 
-const CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%-+<>=";
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%-+<=>';
 
-export default function DecoderText({ text, className = "", as: Component = "span", delay = 0 }) {
-  const [displayText, setDisplayText] = useState("");
-  const containerRef = useRef(null);
+/**
+ * Scramble-decode text animation.
+ * Deliberately avoids IntersectionObserver — hero text is always in viewport
+ * on load, and the observer caused unreliable triggering when a GSAP
+ * animation held the parent at opacity:0.  A plain setTimeout is sufficient
+ * and rock-solid across all browsers and React Strict-Mode double-invoke.
+ */
+export default function DecoderText({ text, className = '', as: Component = 'span', delay = 0 }) {
+  const [displayText, setDisplayText] = useState('');
   const shouldReduceMotion = useReducedMotion();
-  const [hasRun, setHasRun] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
+    let timerId;
+    let rafId;
+    let cancelled = false;
+
+    // Reduced-motion: show final text immediately, no animation
     if (shouldReduceMotion) {
       setDisplayText(text);
       return;
     }
 
-    const startDecoding = () => {
+    // Fire unconditionally after `delay` ms — no intersection check needed
+    timerId = setTimeout(() => {
+      if (cancelled) return;
+
       let iteration = 0;
-      const totalIterations = text.length * 3;
-      let animationFrameId;
+      const total = text.length * 3; // ~3 frames per character
 
-      const decode = () => {
-        setDisplayText(() => {
-          return text
-            .split("")
-            .map((char, index) => {
-              if (index < iteration / 3) return text[index];
-              if (char === " ") return " ";
-              return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
+      const tick = () => {
+        if (cancelled) return;
+
+        setDisplayText(
+          text
+            .split('')
+            .map((ch, i) => {
+              if (i < iteration / 3) return text[i]; // resolved character
+              if (ch === ' ') return ' ';             // preserve spaces
+              return CHARS[Math.floor(Math.random() * CHARS.length)];
             })
-            .join("");
-        });
+            .join('')
+        );
 
-        if (iteration < totalIterations) {
-          iteration += 1;
-          animationFrameId = requestAnimationFrame(decode);
+        iteration += 1;
+        if (iteration < total) {
+          rafId = requestAnimationFrame(tick);
         } else {
-          setDisplayText(text);
+          setDisplayText(text); // guarantee final resolved state
         }
       };
 
-      animationFrameId = requestAnimationFrame(decode);
-      return () => cancelAnimationFrame(animationFrameId);
-    };
+      rafId = requestAnimationFrame(tick);
+    }, delay);
 
-    let timeoutId;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasRun) {
-          setHasRun(true);
-          timeoutId = setTimeout(() => {
-            startDecoding();
-          }, delay);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (containerRef.current) observer.observe(containerRef.current);
-
+    // Cleanup handles React 18 Strict-Mode double-invoke correctly:
+    // the `cancelled` flag stops any in-flight rAF, and timerId is cleared.
     return () => {
-      observer.disconnect();
-      clearTimeout(timeoutId);
+      cancelled = true;
+      clearTimeout(timerId);
+      cancelAnimationFrame(rafId);
     };
-  }, [text, shouldReduceMotion, hasRun, delay]);
+  }, [text, delay, shouldReduceMotion]);
 
   return (
     <Component ref={containerRef} className={className}>
-      {hasRun || shouldReduceMotion ? displayText : <span className="opacity-0">{text}</span>}
+      {/*
+       * While displayText is empty (before decode starts), render the text
+       * with visibility:hidden so layout dimensions are preserved and no
+       * jump occurs when the decoded text appears.
+       */}
+      {displayText
+        ? displayText
+        : <span style={{ visibility: 'hidden' }}>{text}</span>}
     </Component>
   );
 }

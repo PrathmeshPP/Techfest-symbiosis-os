@@ -5,6 +5,9 @@ import Scene from './components/3d/Scene';
 import Hero from './sections/Hero';
 import Symbiosis from './sections/Symbiosis';
 import Capabilities from './sections/Capabilities';
+import InterfaceHUD from './sections/InterfaceHUD';
+import CTA from './sections/CTA';
+import Footer from './components/layout/Footer';
 import CustomCursor from './components/ui/CustomCursor';
 
 function AppContent() {
@@ -27,8 +30,10 @@ function AppContent() {
         <Hero />
         <Symbiosis />
         <Capabilities />
-        <section className="h-[50vh] w-full" />
+        <InterfaceHUD />
+        <CTA />
       </main>
+      <Footer />
     </div>
   );
 }

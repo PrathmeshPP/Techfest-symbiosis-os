@@ -15,15 +15,17 @@ export default function Scene() {
       <ErrorBoundary>
         <Canvas dpr={[1, 2]}>
           <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
-          {/* Procedural Lighting Replacement for HDRI */}
-          <ambientLight intensity={isCyborg ? 0.4 : 0.8} />
-          <directionalLight position={[5, 5, 5]} intensity={isCyborg ? 2 : 3} color="#ffffff" />
-          <directionalLight position={[-5, -5, -2]} intensity={isCyborg ? 2.5 : 0.5} color={isCyborg ? "#00f0ff" : "#aaaaaa"} />
-          <directionalLight position={[0, -5, 5]} intensity={isCyborg ? 1 : 1.5} color={isCyborg ? "#0a0a0a" : "#ffffff"} />
+          {/* Procedural Lighting — no remote HDR dependency */}
+          <ambientLight intensity={isCyborg ? 0.4 : 1.2} />
+          <directionalLight position={[5, 5, 5]} intensity={isCyborg ? 2 : 4} color="#ffffff" />
+          <directionalLight position={[-5, -5, -2]} intensity={isCyborg ? 2.5 : 1.5} color={isCyborg ? "#00f0ff" : "#b0b8c0"} />
+          <directionalLight position={[0, -5, 5]} intensity={isCyborg ? 1 : 2} color={isCyborg ? "#0a0a0a" : "#e0e0e0"} />
           
-          {/* Rim light for metallic highlights */}
-          <pointLight position={[0, 3, -3]} intensity={isCyborg ? 10 : 5} color="#ffffff" />
-          <pointLight position={[-3, 0, 2]} intensity={isCyborg ? 10 : 2} color="#00f0ff" />
+          {/* Rim and fill lights for metallic definition */}
+          <pointLight position={[0, 3, -3]} intensity={isCyborg ? 10 : 8} color="#ffffff" />
+          <pointLight position={[-3, 0, 2]} intensity={isCyborg ? 10 : 3} color={isCyborg ? "#00f0ff" : "#9aaab0"} />
+          {/* Additional fill light for Human mode to reveal form */}
+          <pointLight position={[3, -2, 4]} intensity={isCyborg ? 2 : 6} color={isCyborg ? "#111111" : "#d0d0d0"} />
           
           <Suspense fallback={null}>
             <CyborgCore isCyborg={isCyborg} />

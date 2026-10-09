@@ -20,6 +20,7 @@ export default function Navbar() {
       <div className="font-sans font-bold text-xl tracking-widest uppercase flex items-center">
         Symbiosis
         <motion.span 
+          className="ml-2"
           animate={{ color: isCyborg ? "#00f0ff" : "#111111" }} 
           transition={{ duration: 0.8 }}
         >
